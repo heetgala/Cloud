@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SS Sports Club E-Commerce Platform</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        header {
+            background-color: #ff9900;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        header img {
+            width: 150px;
+            height: auto;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 30px;
+        }
+        footer {
+            background-color: #ff9900;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        footer p {
+            margin: 0;
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: #ff9900;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 10px;
+        }
+
+        /* Section styles */
+        h2 {
+            color: #ff9900;
+        }
+
+        /* Cart styles */
+        .cart {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .cart-item {
+            margin-bottom: 10px;
+        }
+
+        /* Product table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #ff9900;
+            color: #fff;
+        }
+
+        /* Button styles */
+        .add-to-cart {
+            background-color: #ff9900;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .add-to-cart:hover {
+            background-color: #ffcc66;
+        }
+
+        /* Remove button styles */
+        .remove-btn {
+            background-color: #ff3333;
+            color: #fff;
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="download.jpeg" alt="Sports Club Logo">
+        <h1>Welcome to SS Sports Club E-Commerce Platform!</h1>
+    </header>
+    <nav>
+        <!-- Navigation links can be added here -->
+        <a href="home.html">Home</a>
+        <a href="aboutus.html">About us</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Products List:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Football</td>
+                        <td>$29.99</td>
+                        <td>High-quality football for sports enthusiasts</td>
+                        <td>1</td>
+                        <td><button class="add-to-cart">Add to Cart</button></td>
+                    </tr><tr>
+    <td>Basketball</td>
+    <td>$24.99</td>
+    <td>Premium basketball for indoor and outdoor play</td>
+    <td>1</td>
+    <td><button class="add-to-cart">Add to Cart</button></td>
+</tr>
+<tr>
+    <td>Tennis Racket</td>
+    <td>$49.99</td>
+    <td>Professional tennis racket for enhanced performance</td>
+    <td>1</td>
+    <td><button class="add-to-cart">Add to Cart</button></td>
+</tr>
+<tr>
+    <td>Volleyball</td>
+    <td>$19.99</td>
+    <td>High-quality volleyball for beach and indoor games</td>
+    <td>1</td>
+    <td><button class="add-to-cart">Add to Cart</button></td>
+</tr>
+<tr>
+    <td>Cricket Bat</td>
+    <td>$39.99</td>
+    <td>Handcrafted cricket bat for professional players</td>
+    <td>1</td>
+    <td><button class="add-to-cart">Add to Cart</button></td>
+</tr>
+<tr>
+    <td>Golf Clubs Set</td>
+    <td>$199.99</td>
+    <td>Complete set of golf clubs for avid golfers</td>
+    <td>1</td>
+    <td><button class="add-to-cart">Add to Cart</button></td>
+</tr>
+                    <!-- Add more products using the same structure -->
+                </tbody>
+            </table>
+        </section>
+<section id="cart-section">
+            <h2>Your Cart:</h2>
+            <div id="cart-items"></div>
+            <div id="cart-total">Total: $0.00</div>
+            <button id="checkout-btn">Checkout</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Scalable and Secure Sports Club E-Commerce Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const addToCartButtons = document.querySelectorAll(".add-to-cart");
+            const cartItemsContainer = document.getElementById("cart-items");
+            const cartTotalElement = document.getElementById("cart-total");
+            const checkoutBtn = document.getElementById("checkout-btn");
+            let cartTotal = 0;
+            const cart = [];
+
+            // Function to update the cart total
+            function updateCartTotal() {
+    const taxRate = 0.04; // 4% tax rate
+    const taxAmount = cartTotal * taxRate;
+    const totalAmount = cartTotal + taxAmount;
+    cartTotalElement.textContent = `Subtotal: $${cartTotal.toFixed(2)} | Tax (4%): $${taxAmount.toFixed(2)} | Total: $${totalAmount.toFixed(2)}`;
+}
+
+            // Function to add an item to the cart
+            function addToCart(item) {
+                const existingItem = cart.find(cartItem => cartItem.name === item.name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    item.quantity = 1;
+                    cart.push(item);
+                }
+                cartTotal += item.price;
+                updateCartTotal();
+                renderCart();
+            }
+
+            // Function to remove an item from the cart
+            function removeFromCart(itemName) {
+                const itemIndex = cart.findIndex(item => item.name === itemName);
+                if (itemIndex !== -1) {
+                    const removedItem = cart.splice(itemIndex, 1)[0];
+                    cartTotal -= removedItem.price * removedItem.quantity;
+                    updateCartTotal();
+                    renderCart();
+                }
+            }
+
+            // Function to render the cart items with remove buttons
+            function renderCart() {
+                cartItemsContainer.innerHTML = "";
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement("div");
+                    cartItemElement.textContent = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+                    const removeButton = document.createElement("button");
+                    removeButton.textContent = "Remove";
+                    removeButton.className = "remove-btn";
+                    removeButton.addEventListener("click", () => removeFromCart(item.name));
+                    cartItemElement.appendChild(removeButton);
+                    cartItemsContainer.appendChild(cartItemElement);
+                });
+            }
+
+            // Event listener for Add to Cart buttons
+            addToCartButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const productName = button.parentElement.parentElement.children[0].textContent;
+                    const productPrice = parseFloat(button.parentElement.parentElement.children[1].textContent.replace("$", ""));
+                    const product = { name: productName, price: productPrice };
+                    addToCart(product);
+                });
+            });
+
+            // Event listener for Checkout button
+           checkoutBtn.addEventListener("click", function () {
+    // Redirect to checkout page
+    window.location.href = "checkout.php"; 
+});
+
+            // Initial rendering of the cart
+            renderCart();
+        });
+    </script>
+</body>
+</html
